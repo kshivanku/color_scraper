@@ -23,10 +23,6 @@ body{
   font-family: georgia;
 }
 
-form {
-  margin-bottom: 16px;
-}
-
 input {
     width: 100%;
     height: 60px;
@@ -36,6 +32,15 @@ input {
 
 input:focus {
   outline: none;
+}
+
+h1 {
+  font-size: 18px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 16px;
+  font-weight: bold;
+  margin-top: 16px;
+  /*line-height: 24px;*/
 }
 
 #color_blocks{

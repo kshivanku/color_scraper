@@ -26,6 +26,7 @@ function initialize() {
 function gotColors(data) {
   // console.log(colors);
   $("#color_blocks").empty();
+  $("h1").html("Total Colors: " + data.colors.length);
   for(i = 0; i < data.colors.length; i++){
     $("#color_blocks").append('<div class="color_block" id='+i+'></div>');
     $("#"+i).css('background-color', data.colors[i]);

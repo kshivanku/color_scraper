@@ -69,12 +69,9 @@ function readColors(){
 }
 
 function cleanColors(colors_data){
-  var color;
   for(j = 0; j < colors_data.length ; j++){
-    // color = colors_data[i].slice(1,colors_data[i].length - 1);
-    color = colors_data[j];
-    if(colors_ar.indexOf(color) == -1){
-      colors_ar.push(color);
+    if(colors_ar.indexOf(colors_data[j]) == -1){
+      colors_ar.push(colors_data[j]);
     }
   }
 }
