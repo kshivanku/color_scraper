@@ -2,10 +2,11 @@ var fs = require('fs');
 var cssFolder = './saved_files/css';
 var scrape = require('website-scraper');
 var express = require('express');
+var rimraf = require('rimraf');
 var css_file = [];
 var css_filedata = [];
 var colors_ar = [];
-var color_exp = /\s#[\d\w]+[\s;]/g;
+var color_exp = /#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/g;
 
 var app = express();
 var server = app.listen(8000, function(){
@@ -21,7 +22,13 @@ app.use(bodyparser.urlencoded({
 }));
 
 //GETTING THE URL FROM FRONTEND
-app.post("/scrapecolor/", scrapeColor);
+app.post("/scrapecolor/", readyDir);
+
+function readyDir(request, response){
+  rimraf('/Users/shivanku/Documents/DWD/scraping_test/saved_files', function(){
+     scrapeColor(request, response);
+  });
+}
 function scrapeColor(request, response){
   scrape({
     urls: [request.body.url],
@@ -34,6 +41,9 @@ function scrapeColor(request, response){
       console.log(error);
     }
     else{
+      css_file = [];
+      css_filedata = [];
+      colors_ar = [];
       //READ FILE NAMES OF CSS FILES THAT ARE SAVED
       fs.readdir(cssFolder, (err, files) => {
         files.forEach(file => {
@@ -55,15 +65,14 @@ function readColors(){
       cleanColors(colors_data);
     }
   }
-  console.log(colors_ar);
-  console.log(colors_ar.length);
   return {colors : colors_ar};
 }
 
 function cleanColors(colors_data){
   var color;
-  for(i = 0; i < colors_data.length ; i++){
-    color = colors_data[i].slice(1,colors_data[i].length - 1);
+  for(j = 0; j < colors_data.length ; j++){
+    // color = colors_data[i].slice(1,colors_data[i].length - 1);
+    color = colors_data[j];
     if(colors_ar.indexOf(color) == -1){
       colors_ar.push(color);
     }
