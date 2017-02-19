@@ -1,31 +1,50 @@
 var fs = require('fs');
 var cssFolder = './saved_files/css';
 var scrape = require('website-scraper');
+var express = require('express');
 var css_file = [];
 var css_filedata = [];
 var colors_ar = [];
 var color_exp = /\s#[\d\w]+[\s;]/g;
 
-scrape({
-  urls: ['https://www.npmjs.com/package/website-scraper'],
-  directory: '/Users/shivanku/Documents/DWD/scraping_test/saved_files',
-  sources: [
-    {selector: 'link[rel="stylesheet"]', attr: 'href'}
-  ]
-}, function(error, result){
-  if(error){
-    console.log(error);
-  }
-  else{
-    //READ FILE NAMES OF CSS FILES THAT ARE SAVED
-    fs.readdir(cssFolder, (err, files) => {
-      files.forEach(file => {
-        css_file.push(file);
+var app = express();
+var server = app.listen(8000, function(){
+  console.log("listening on port 8000");
+});
+app.use(express.static("public"));
+
+//HAVE TO USE BODY PARSER TO MAKE A POST REQUEST
+var bodyparser = require("body-parser");
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
+  extented: true
+}));
+
+//GETTING THE URL FROM FRONTEND
+app.post("/scrapecolor/", scrapeColor);
+function scrapeColor(request, response){
+  scrape({
+    urls: [request.body.url],
+    directory: '/Users/shivanku/Documents/DWD/scraping_test/saved_files',
+    sources: [
+      {selector: 'link[rel="stylesheet"]', attr: 'href'}
+    ]
+  }, function(error, result){
+    if(error){
+      console.log(error);
+    }
+    else{
+      //READ FILE NAMES OF CSS FILES THAT ARE SAVED
+      fs.readdir(cssFolder, (err, files) => {
+        files.forEach(file => {
+          css_file.push(file);
+        });
+        var reply = readColors();
+        response.send(reply);
       });
-      readColors();
-    });
-  }
-})
+    }
+  })
+}
 
 function readColors(){
   var colors_data;
@@ -38,6 +57,7 @@ function readColors(){
   }
   console.log(colors_ar);
   console.log(colors_ar.length);
+  return {colors : colors_ar};
 }
 
 function cleanColors(colors_data){
