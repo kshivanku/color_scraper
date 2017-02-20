@@ -20,7 +20,7 @@ clear: both;
 }
 
 body{
-  font-family: georgia;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 input {
@@ -43,12 +43,30 @@ h1 {
   /*line-height: 24px;*/
 }
 
+#loading {
+  background: url('ajax-loader.gif') no-repeat;
+  padding-left: 302px;
+  line-height: 216px;
+  font-size: 16px;
+  margin-left: 16px;
+  margin-top: 32px;
+  color: #b0b0b0;
+  display: none;
+}
+
+#font_list p {
+  font-size: 14px;
+  line-height: 21px;
+  padding-left: 16px;
+}
+
 #color_blocks{
   padding: 16px;
   margin-bottom: 16px;
 }
 
 .color_block {
+  font-family: georgia;
   width: 12.5%;
   height: 100px;
   text-align: center;
