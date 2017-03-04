@@ -8,7 +8,7 @@ var color_exp = /#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/g;
 var font_exp = /font-family:.*?[;}]/g;
 
 var app = express();
-var server = app.listen(8000, function(){
+var server = app.listen(process.env.PORT || 8000, function(){
   console.log("listening on port 8000");
 });
 app.use(express.static("public"));
