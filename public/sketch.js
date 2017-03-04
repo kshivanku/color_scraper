@@ -17,7 +17,7 @@ function initialize() {
             $.ajax({
               type: 'POST',
               dataType: "json",
-              url: 'https://savestyle.herokuapp.com/scrapecolor/',
+              url: '/scrapecolor/',
               data: query,
               success: function(data){
                   gotData(data);

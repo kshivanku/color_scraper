@@ -21,7 +21,7 @@ app.use(bodyparser.urlencoded({
 }));
 
 //GETTING THE URL FROM FRONTEND
-app.post("https://savestyle.herokuapp.com/scrapecolor/", readyDir);
+app.post("/scrapecolor/", readyDir);
 
 function readyDir(request, response){
   //HAVE TO CLEAN THE FOLDER TO SAVE INCOMING FILES
