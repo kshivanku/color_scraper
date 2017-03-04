@@ -21,18 +21,18 @@ app.use(bodyparser.urlencoded({
 }));
 
 //GETTING THE URL FROM FRONTEND
-app.post("/scrapecolor/", readyDir);
+app.post("/scrapecolor", readyDir);
 
 function readyDir(request, response){
   //HAVE TO CLEAN THE FOLDER TO SAVE INCOMING FILES
-  rimraf('/Users/shivanku/Documents/DWD/scraping_test/saved_files', function(){
+  rimraf('saved_files', function(){
      scrapeColor(request, response);
   });
 }
 function scrapeColor(request, response){
   scrape({
     urls: [request.body.url],
-    directory: '/Users/shivanku/Documents/DWD/scraping_test/saved_files',
+    directory: 'saved_files',
     sources: [
       {selector: 'link[rel="stylesheet"]', attr: 'href'}
     ]
