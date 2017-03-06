@@ -8,7 +8,8 @@ var color_exp = /#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/g;
 var font_exp = /font-family:.*?[;}]/g;
 
 var app = express();
-var server = app.listen(process.env.PORT || 8000, function(){
+// var server = app.listen(process.env.PORT || 8000, function(){
+var server = app.listen(8000, function(){
   console.log("listening on port 8000");
 });
 app.use(express.static("public"));
@@ -16,14 +17,13 @@ app.use(express.static("public"));
 //HAVE TO USE BODY PARSER TO MAKE A POST REQUEST
 var bodyparser = require("body-parser");
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({
-  extented: true
-}));
+app.use(bodyparser.urlencoded({extented: true}));
 
 //GETTING THE URL FROM FRONTEND
 app.post("/scrapecolor", readyDir);
 
 function readyDir(request, response){
+  console.log(request);
   //HAVE TO CLEAN THE FOLDER TO SAVE INCOMING FILES
   rimraf('saved_files', function(){
      scrapeColor(request, response);
